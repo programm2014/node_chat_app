@@ -4,17 +4,15 @@ $(document).ready(function(){
 	socket.on("connect", function (){
 		console.log("connected to the server");
 
-		socket.emit("createMessage", {
-			from: 'john',
-			text: 'salut'
-	});
+	// 	socket.emit("createMessage", {
+	// 		from: 'john',
+	// 		text: 'salut'
+	// });
 		
 	
 
 	});
-
 	
-
 	socket.on("newMessage", function (message) {
 			console.log(message);
 
