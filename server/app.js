@@ -14,29 +14,19 @@ app.use(express.static(publicPath));
 // 	res.render("index");
 // });
 
+var {generateMessage} = require("./utils/message.js");
+
  var io = socketIO(server); 
  	io.on("connection", (socket)=>{
  		console.log("new user connected");
 
- 		socket.emit("newMessage",{
- 			from:"admin",
- 			text: "welcome",
- 			createdAt: new Date().getTime()
- 		});
+ 		socket.emit("newMessage", generateMessage("Admin", "Welcom"));
 
- 		socket.broadcast.emit("newMessage",{
- 			from: "Admin",
- 			text: "new user join",
- 			createdAt: new Date().getTime()
- 		});
+ 		socket.broadcast.emit("newMessage", generateMessage("Admin", "New user joined"));
 
  		socket.on("createMessage", (message)=>{
  			console.log("new message",message);
- 			io.emit("newMessage",{
- 				from: message.from,
- 				text: message.text,
- 				createdAt: new Date().getTime()
- 			});
+ 			io.emit("newMessage", generateMessage(message.from, message.text));
 
  			// socket.broadcast.emit("newMessage", {
  			// 	from: message.from,
